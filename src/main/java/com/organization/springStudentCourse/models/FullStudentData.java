@@ -3,23 +3,23 @@ package com.organization.springStudentCourse.models;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.Set;
 
-@JsonPropertyOrder({ "id", "firstName", "lastName", "classes" })
+@JsonPropertyOrder({ "id", "firstName", "lastName", "courses" })
 public class FullStudentData extends StudentData {
 
-  private Set<CourseData> classes;
+  private Set<CourseData> courses;
 
   public FullStudentData(int id, String firstName, String lastName,
-      Set<CourseData> classes) {
+      Set<CourseData> courses) {
     super(id,firstName,lastName);
-    this.classes = classes;
+    this.courses = courses;
   }
 
-  public Set<CourseData> getClasses() {
-    return classes;
+  public Set<CourseData> getCourses() {
+    return courses;
   }
 
-  public void setClasses(
-      Set<CourseData> classes) {
-    this.classes = classes;
+  public void setCourses(
+      Set<CourseData> courses) {
+    this.courses = courses;
   }
 }
