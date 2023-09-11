@@ -5,6 +5,7 @@ import com.organization.springStudentsToClasses.models.ClassBase;
 import com.organization.springStudentsToClasses.models.ClassWithId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
@@ -44,5 +45,16 @@ public class ClassRepository extends MockDataStorage implements IClassRepository
       throw new NotFoundException("unable to find Class");
     }
     super.classMap.remove(classId);
+  }
+
+  @Override
+  public List<ClassWithId> getAllSearch(String code, String title, String description) {
+    return super.classMap.values()
+        .stream()
+        .filter((classWithId) ->
+            classWithId.getCode().equalsIgnoreCase(code)
+                || classWithId.getTitle().equalsIgnoreCase(title)
+                || classWithId.getDescription().equalsIgnoreCase(description)
+        ).collect(Collectors.toList());
   }
 }

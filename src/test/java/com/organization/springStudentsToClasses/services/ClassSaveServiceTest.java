@@ -6,9 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.organization.springStudentsToClasses.exceptions.NotFoundException;
 import com.organization.springStudentsToClasses.models.ClassBase;
 import com.organization.springStudentsToClasses.models.ClassWithId;
+import com.organization.springStudentsToClasses.models.StudentWithId;
 import com.organization.springStudentsToClasses.storage.IClassRepository;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,6 +24,13 @@ public class ClassSaveServiceTest {
   public void setUp() {
     classBase = new ClassBase("code", "title", "description");
     classRepository = new IClassRepository() {
+      @Override
+      public List<ClassWithId> getAllSearch(String code, String title, String description) {
+        List<ClassWithId> data = new ArrayList<>();
+        data.add(new ClassWithId(1, code, title, description));
+        return data;
+      }
+
       @Override
       public List<ClassWithId> getAll() {
         return new ArrayList<>();
@@ -56,6 +65,13 @@ public class ClassSaveServiceTest {
     List<ClassWithId> allClasses = instance.getAll();
     assertNotNull(allClasses);
     assertEquals(0, allClasses.size());
+  }
+
+  @Test
+  public void getAllSearch() throws Exception {
+    List<ClassWithId> allClasses = instance.getAllSearch("code", "title", "description");
+    assertNotNull(allClasses);
+    Assert.assertEquals(1, allClasses.size());
   }
 
   @Test

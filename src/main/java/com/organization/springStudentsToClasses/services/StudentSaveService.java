@@ -41,4 +41,9 @@ public class StudentSaveService implements IStudentRepository {
   public void delete(int id) throws NotFoundException {
     repository.delete(id);
   }
+
+  @Override
+  public List<StudentWithId> getAllSearch(String firstName, String lastName) {
+    return repository.getAllSearch(firstName, lastName);
+  }
 }

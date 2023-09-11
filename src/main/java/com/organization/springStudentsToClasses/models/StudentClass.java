@@ -1,7 +1,9 @@
 package com.organization.springStudentsToClasses.models;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.List;
 
+@JsonPropertyOrder({ "id", "firstName", "lastName", "classes" })
 public final class StudentClass extends StudentWithId {
 
   private List<ClassWithId> classes;
