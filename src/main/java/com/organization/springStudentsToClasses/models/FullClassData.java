@@ -1,25 +1,25 @@
 package com.organization.springStudentsToClasses.models;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import java.util.List;
+import java.util.Set;
 
 @JsonPropertyOrder({ "id", "code", "title", "description", "students" })
-public final class ClassStudent extends ClassWithId {
+public class FullClassData extends ClassData {
 
-  private List<StudentWithId> students;
+  private Set<StudentData> students;
 
-  public ClassStudent(int id, String code, String title, String description,
-      List<StudentWithId> students) {
+  public FullClassData(int id, String code, String title, String description,
+      Set<StudentData> students) {
     super(id, code, title, description);
     this.students = students;
   }
 
-  public List<StudentWithId> getStudents() {
+  public Set<StudentData> getStudents() {
     return students;
   }
 
   public void setStudents(
-      List<StudentWithId> students) {
+      Set<StudentData> students) {
     this.students = students;
   }
 }

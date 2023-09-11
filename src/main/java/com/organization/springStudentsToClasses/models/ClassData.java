@@ -1,18 +1,28 @@
 package com.organization.springStudentsToClasses.models;
 
-public class ClassBase {
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+@JsonPropertyOrder({ "id", "code", "title", "description" })
+public class ClassData {
+
+  private int id;
   private String code;
   private String title;
   private String description;
 
-  public ClassBase() {
-  }
-
-  public ClassBase(String code, String title, String description) {
+  public ClassData(int id, String code, String title, String description) {
+    this.id = id;
     this.code = code;
     this.title = title;
     this.description = description;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 
   public String getCode() {
