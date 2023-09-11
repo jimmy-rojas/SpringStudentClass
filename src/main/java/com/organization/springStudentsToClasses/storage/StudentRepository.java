@@ -1,54 +1,60 @@
 package com.organization.springStudentsToClasses.storage;
 
 import com.organization.springStudentsToClasses.exceptions.NotFoundException;
-import com.organization.springStudentsToClasses.models.StudentBase;
-import com.organization.springStudentsToClasses.models.StudentWithId;
+import com.organization.springStudentsToClasses.models.FullStudentData;
+import com.organization.springStudentsToClasses.models.StudentData;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @Profile("default")
-public class StudentRepository extends MockDataStorage implements IStudentRepository {
+public class StudentRepository implements IStudentRepository {
+
+  @Autowired
+  private MockDataStorage storage;
 
   @Override
-  public List<StudentWithId> getAll() {
-    return new ArrayList<StudentWithId>(super.studentMap.values());
+  public List<FullStudentData> getAll() {
+    return new ArrayList<>(storage.getStudentClassMap().values());
   }
 
   @Override
-  public StudentWithId save(StudentBase student) {
-    int newId = super.counterStudent.incrementAndGet();
-    StudentWithId studentWithId = new StudentWithId(newId, student.getFirstName(),
-        student.getLastName());
-    super.studentMap.put(newId, studentWithId);
-    return studentWithId;
-  }
-
-  @Override
-  public StudentWithId update(int studentId, StudentBase student) throws NotFoundException {
-    if (!super.studentMap.containsKey(studentId)) {
+  public FullStudentData getById(int id)
+      throws NotFoundException {
+    if (!storage.getStudentClassMap().containsKey(id)) {
       throw new NotFoundException("unable to find student");
     }
-    StudentWithId studentWithId = super.studentMap.get(studentId);
-    studentWithId.setFirstName(student.getFirstName());
-    studentWithId.setLastName(student.getLastName());
-    return studentWithId;
+    return storage.getStudentClassMap().get(id);
+  }
+
+  @Override
+  public FullStudentData save(FullStudentData student) {
+    int newId = storage.counterStudent.incrementAndGet();
+    student.setId(newId);
+    storage.getStudentClassMap().put(newId, student);
+    return student;
+  }
+
+  @Override
+  public FullStudentData update(FullStudentData student)
+      throws NotFoundException {
+    storage.getStudentClassMap().put(student.getId(), student);
+    return student;
   }
 
   @Override
   public void delete(int studentId) throws NotFoundException {
-    if (!super.studentMap.containsKey(studentId)) {
-      throw new NotFoundException("unable to find student");
-    }
-    super.studentMap.remove(studentId);
+    StudentData studentData = getById(studentId);
+    storage.getStudentClassMap().remove(studentData.getId());
   }
 
   @Override
-  public List<StudentWithId> getAllSearch(String firstName, String lastName) {
-    return super.studentMap.values()
+  public List<FullStudentData> getAllSearch(String firstName, String lastName) {
+    return storage.getStudentClassMap().values()
         .stream()
         .filter((student) ->
           student.getFirstName().equalsIgnoreCase(firstName)

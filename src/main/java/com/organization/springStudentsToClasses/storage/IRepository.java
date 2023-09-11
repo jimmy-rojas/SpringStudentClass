@@ -1,16 +1,19 @@
 package com.organization.springStudentsToClasses.storage;
 
+import com.organization.springStudentsToClasses.exceptions.InvalidOperationException;
 import com.organization.springStudentsToClasses.exceptions.NotFoundException;
 import java.util.List;
 
-public interface IRepository<U, T> {
+public interface IRepository<T> {
 
   List<T> getAll();
 
-  T save(U dataToSave);
+  T getById(int id) throws NotFoundException;
 
-  T update(int id, U dataToUpdate) throws NotFoundException;
+  T save(T dataToSave);
 
-  void delete(int id) throws NotFoundException;
+  T update(T dataToUpdate) throws NotFoundException;
+
+  void delete(int id) throws NotFoundException, InvalidOperationException;
 
 }

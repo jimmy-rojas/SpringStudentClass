@@ -1,50 +1,65 @@
 package com.organization.springStudentsToClasses.storage;
 
-import com.organization.springStudentsToClasses.models.ClassStudent;
-import com.organization.springStudentsToClasses.models.ClassWithId;
-import com.organization.springStudentsToClasses.models.StudentClass;
-import com.organization.springStudentsToClasses.models.StudentWithId;
-import java.util.ArrayList;
+import com.organization.springStudentsToClasses.models.ClassData;
+import com.organization.springStudentsToClasses.models.FullClassData;
+import com.organization.springStudentsToClasses.models.FullStudentData;
+import com.organization.springStudentsToClasses.models.StudentData;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import javax.annotation.PostConstruct;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
+@Component
+@Scope("singleton")
 public class MockDataStorage {
 
-  protected static Map<Integer, StudentWithId> studentMap = new HashMap<>();
-  protected static Map<Integer, ClassWithId> classMap = new HashMap<>();
-  protected static Map<Integer, ClassStudent> classStudentMap = new HashMap<>();
-  protected static Map<Integer, StudentClass> studentClassMap = new HashMap<>();
+  private Map<Integer, FullClassData> classStudentMap = new HashMap<>();
+  private Map<Integer, FullStudentData> studentClassMap = new HashMap<>();
 
-  protected static final AtomicInteger counterStudent = new AtomicInteger();
-  protected static final AtomicInteger counterClass = new AtomicInteger();
+  public final AtomicInteger counterStudent = new AtomicInteger();
+  public final AtomicInteger counterClass = new AtomicInteger();
 
-  {
+  @PostConstruct
+  private void init() {
+    Map<Integer, StudentData> studentMap = new HashMap<>();
+    Map<Integer, ClassData> classMap = new HashMap<>();
+
     for (int i=0; i<5; i++) {
-      StudentWithId studentWithId = new StudentWithId(i,"firstName-"+i, "lastName-"+i);
-      studentMap.put(i, studentWithId);
+      StudentData studentData = new StudentData(i,"firstName-"+i, "lastName-"+i);
+      studentMap.put(i, studentData);
       counterStudent.incrementAndGet();
 
-      StudentClass studentClass = new StudentClass(studentWithId.getId(),
-          studentWithId.getFirstName(), studentWithId.getLastName(), new ArrayList<>());
+      FullStudentData studentClass = new FullStudentData(studentData.getId(),
+          studentData.getFirstName(), studentData.getLastName(), new HashSet<>());
       studentClassMap.put(i, studentClass);
     }
     for (int i=0; i<3; i++) {
-      ClassWithId classWithId = new ClassWithId(i,"code-"+i, "title-"+i, "description-"+i);
-      classMap.put(i, classWithId);
+      ClassData classData = new ClassData(i,"code-"+i, "title-"+i, "description-"+i);
+      classMap.put(i, classData);
       counterClass.incrementAndGet();
       int rand = new Random().nextInt(studentMap.size());
-      List<StudentWithId> studentList = new ArrayList<>();
+      Set<StudentData> studentList = new HashSet<>();
       for (int j=0; j<=rand; j++) {
         studentList.add(studentMap.get(j));
-        studentClassMap.get(j).getClasses().add(classWithId);
+        studentClassMap.get(j).getClasses().add(classData);
       }
-      ClassStudent classStudent = new ClassStudent(classWithId.getId(), classWithId.getCode(),
-          classWithId.getTitle(), classWithId.getDescription(), studentList);
+      FullClassData classStudent = new FullClassData(classData.getId(), classData.getCode(),
+          classData.getTitle(), classData.getDescription(), studentList);
       classStudentMap.put(i, classStudent);
     }
+  }
+
+  public Map<Integer, FullClassData> getClassStudentMap() {
+    return classStudentMap;
+  }
+
+  public Map<Integer, FullStudentData> getStudentClassMap() {
+    return studentClassMap;
   }
 
 }
