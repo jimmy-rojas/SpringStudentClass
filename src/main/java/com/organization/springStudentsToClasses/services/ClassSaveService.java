@@ -41,4 +41,9 @@ public class ClassSaveService implements IClassRepository {
   public void delete(int id) throws NotFoundException {
     repository.delete(id);
   }
+
+  @Override
+  public List<ClassWithId> getAllSearch(String code, String title, String description) {
+    return repository.getAllSearch(code, title, description);
+  }
 }

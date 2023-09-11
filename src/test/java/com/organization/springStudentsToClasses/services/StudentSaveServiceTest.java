@@ -23,6 +23,13 @@ public class StudentSaveServiceTest {
     studentBase = new StudentBase("firstName", "lastName");
     studentRepository = new IStudentRepository() {
       @Override
+      public List<StudentWithId> getAllSearch(String firstName, String lastName) {
+        List<StudentWithId> data = new ArrayList<>();
+        data.add(new StudentWithId(1, firstName, lastName));
+        return data;
+      }
+
+      @Override
       public List<StudentWithId> getAll() {
         return new ArrayList<>();
       }
@@ -55,6 +62,13 @@ public class StudentSaveServiceTest {
     List<StudentWithId> allStudents = instance.getAll();
     assertNotNull(allStudents);
     assertEquals(0, allStudents.size());
+  }
+
+  @Test
+  public void getAllSearch() throws Exception {
+    List<StudentWithId> allStudents = instance.getAllSearch("firstName", "lastName");
+    assertNotNull(allStudents);
+    assertEquals(1, allStudents.size());
   }
 
   @Test

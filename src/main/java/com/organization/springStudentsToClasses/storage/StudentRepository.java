@@ -5,6 +5,7 @@ import com.organization.springStudentsToClasses.models.StudentBase;
 import com.organization.springStudentsToClasses.models.StudentWithId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
@@ -43,5 +44,15 @@ public class StudentRepository extends MockDataStorage implements IStudentReposi
       throw new NotFoundException("unable to find student");
     }
     super.studentMap.remove(studentId);
+  }
+
+  @Override
+  public List<StudentWithId> getAllSearch(String firstName, String lastName) {
+    return super.studentMap.values()
+        .stream()
+        .filter((student) ->
+          student.getFirstName().equalsIgnoreCase(firstName)
+              || student.getLastName().equalsIgnoreCase(lastName)
+    ).collect(Collectors.toList());
   }
 }

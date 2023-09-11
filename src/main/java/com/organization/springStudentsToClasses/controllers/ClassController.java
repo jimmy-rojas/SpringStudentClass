@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -49,5 +50,13 @@ public class ClassController {
       throws NotFoundException {
     this.service.delete(id);
     return new ResponseEntity(HttpStatus.OK);
+  }
+
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "/search")
+  public ResponseEntity getAllClassesSearch(
+      @RequestParam("code") String code,
+      @RequestParam("title") String title,
+      @RequestParam("description") String description) {
+    return new ResponseEntity(this.service.getAllSearch(code, title, description), HttpStatus.OK);
   }
 }
