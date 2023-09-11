@@ -1,6 +1,6 @@
 package com.organization.springStudentsToClasses.models;
 
-public final class StudentWithId extends StudentBase {
+public class StudentWithId extends StudentBase {
 
   private int id;
 
