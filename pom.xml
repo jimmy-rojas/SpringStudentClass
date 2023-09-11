@@ -3,10 +3,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.organization.springStudentsToClasses</groupId>
-	<artifactId>SpringStudentsToClasses</artifactId>
+	<groupId>com.organization.springStudentCourse</groupId>
+	<artifactId>springStudentCourse</artifactId>
 	<version>1.0.1-SNAPSHOT</version>
-	<name>SpringStudentsToClasses</name>
+	<name>springStudentCourse</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
