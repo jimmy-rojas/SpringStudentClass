@@ -46,7 +46,7 @@ public class MockDataStorage {
       Set<StudentData> studentList = new HashSet<>();
       for (int j=0; j<=rand; j++) {
         studentList.add(studentMap.get(j));
-        studentClassMap.get(j).getClasses().add(classData);
+        studentClassMap.get(j).getCourses().add(classData);
       }
       FullCourseData classStudent = new FullCourseData(classData.getId(), classData.getCode(),
           classData.getTitle(), classData.getDescription(), studentList);

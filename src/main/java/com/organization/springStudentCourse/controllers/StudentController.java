@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("v1/student")
+@RequestMapping("v1/students")
 public class StudentController {
 
   private final StudentSaveService service;
@@ -36,15 +36,15 @@ public class StudentController {
     return new ResponseEntity(this.service.getAll(), HttpStatus.OK);
   }
 
-  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "/{studentId}")
-  public ResponseEntity getStudentClasses(@PathVariable int studentId)
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "/{studentId}/courses")
+  public ResponseEntity getStudentCourses(@PathVariable int studentId)
       throws NotFoundException {
     return new ResponseEntity(this.service.getById(studentId), HttpStatus.OK);
   }
 
-  @RequestMapping(method=POST, value="/{studentId}")
-  public ResponseEntity assignClassesToStudent(@PathVariable int studentId,
-      @RequestBody Set<Integer> classIds) throws NotFoundException {
+  @RequestMapping(method=POST, value="/{studentId}/courses")
+  public ResponseEntity assignCoursesToStudent(@PathVariable int studentId,
+                                               @RequestBody Set<Integer> classIds) throws NotFoundException {
     return new ResponseEntity(this.service.assignClassesToStudent(studentId, classIds),
         HttpStatus.OK);
   }

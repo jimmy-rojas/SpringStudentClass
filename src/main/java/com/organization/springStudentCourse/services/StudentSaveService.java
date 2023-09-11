@@ -58,7 +58,7 @@ public class StudentSaveService {
   public void delete(int id)
       throws NotFoundException, InvalidOperationException {
     FullStudentData studentData = getById(id);
-    if (studentData.getClasses().isEmpty()) {
+    if (studentData.getCourses().isEmpty()) {
       repository.delete(id);
     } else {
       throw new InvalidOperationException("Unable to delete student with assigned classes");
@@ -81,7 +81,7 @@ public class StudentSaveService {
         logger.warn("Unable to find class with id: " + classId);
       }
     });
-    studentData.setClasses(classes);
+    studentData.setCourses(classes);
     return repository.update(studentData);
   }
 }
