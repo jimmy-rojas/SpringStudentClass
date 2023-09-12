@@ -100,7 +100,7 @@ public class StudentServiceTest {
 
   @Test
   public void testGetAll() throws Exception {
-    List<StudentCoursesWrapper> allStudents = instance.getAll();
+    List<StudentDTO> allStudents = instance.getAll();
     assertNotNull(allStudents);
     assertEquals(0, allStudents.size());
   }
