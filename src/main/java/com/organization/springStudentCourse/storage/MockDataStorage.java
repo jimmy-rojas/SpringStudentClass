@@ -1,9 +1,9 @@
 package com.organization.springStudentCourse.storage;
 
-import com.organization.springStudentCourse.models.CourseData;
-import com.organization.springStudentCourse.models.FullCourseData;
-import com.organization.springStudentCourse.models.FullStudentData;
-import com.organization.springStudentCourse.models.StudentData;
+import com.organization.springStudentCourse.models.CourseDTO;
+import com.organization.springStudentCourse.models.CourseStudentsWrapper;
+import com.organization.springStudentCourse.models.StudentCoursesWrapper;
+import com.organization.springStudentCourse.models.StudentDTO;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -18,47 +18,47 @@ import org.springframework.stereotype.Component;
 @Scope("singleton")
 public class MockDataStorage {
 
-  private Map<Integer, FullCourseData> classStudentMap = new HashMap<>();
-  private Map<Integer, FullStudentData> studentClassMap = new HashMap<>();
+  private Map<Integer, CourseStudentsWrapper> classStudentMap = new HashMap<>();
+  private Map<Integer, StudentCoursesWrapper> studentClassMap = new HashMap<>();
 
   public final AtomicInteger counterStudent = new AtomicInteger();
   public final AtomicInteger counterClass = new AtomicInteger();
 
   @PostConstruct
   private void init() {
-    Map<Integer, StudentData> studentMap = new HashMap<>();
-    Map<Integer, CourseData> courseMap = new HashMap<>();
+    Map<Integer, StudentDTO> studentMap = new HashMap<>();
+    Map<Integer, CourseDTO> courseMap = new HashMap<>();
 
     for (int i=0; i<5; i++) {
-      StudentData studentData = new StudentData(i,"firstName-"+i, "lastName-"+i);
-      studentMap.put(i, studentData);
+      StudentDTO studentDTO = new StudentDTO(i,"firstName-"+i, "lastName-"+i);
+      studentMap.put(i, studentDTO);
       counterStudent.incrementAndGet();
 
-      FullStudentData studentClass = new FullStudentData(studentData.getId(),
-          studentData.getFirstName(), studentData.getLastName(), new HashSet<>());
-      studentClassMap.put(i, studentClass);
+      StudentCoursesWrapper studentCoursesWrapper = new StudentCoursesWrapper(studentDTO.getId(),
+          studentDTO.getFirstName(), studentDTO.getLastName(), new HashSet<>());
+      studentClassMap.put(i, studentCoursesWrapper);
     }
     for (int i=0; i<3; i++) {
-      CourseData classData = new CourseData(i,"code-"+i, "title-"+i, "description-"+i);
-      courseMap.put(i, classData);
+      CourseDTO courseDTO = new CourseDTO(i,"code-"+i, "title-"+i, "description-"+i);
+      courseMap.put(i, courseDTO);
       counterClass.incrementAndGet();
       int rand = new Random().nextInt(studentMap.size());
-      Set<StudentData> studentList = new HashSet<>();
+      Set<StudentDTO> studentList = new HashSet<>();
       for (int j=0; j<=rand; j++) {
         studentList.add(studentMap.get(j));
-        studentClassMap.get(j).getCourses().add(classData);
+        studentClassMap.get(j).getCourses().add(courseDTO);
       }
-      FullCourseData classStudent = new FullCourseData(classData.getId(), classData.getCode(),
-          classData.getTitle(), classData.getDescription(), studentList);
-      classStudentMap.put(i, classStudent);
+      CourseStudentsWrapper courseStudentsWrapper = new CourseStudentsWrapper(courseDTO.getId(), courseDTO.getCode(),
+          courseDTO.getTitle(), courseDTO.getDescription(), studentList);
+      classStudentMap.put(i, courseStudentsWrapper);
     }
   }
 
-  public Map<Integer, FullCourseData> getClassStudentMap() {
+  public Map<Integer, CourseStudentsWrapper> getClassStudentMap() {
     return classStudentMap;
   }
 
-  public Map<Integer, FullStudentData> getStudentClassMap() {
+  public Map<Integer, StudentCoursesWrapper> getStudentClassMap() {
     return studentClassMap;
   }
 

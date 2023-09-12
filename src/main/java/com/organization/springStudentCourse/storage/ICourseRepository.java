@@ -1,9 +1,9 @@
 package com.organization.springStudentCourse.storage;
 
-import com.organization.springStudentCourse.models.FullCourseData;
+import com.organization.springStudentCourse.models.CourseStudentsWrapper;
 import java.util.List;
 
-public interface ICourseRepository extends IRepository<FullCourseData> {
+public interface ICourseRepository extends IRepository<CourseStudentsWrapper> {
 
-  List<FullCourseData> getAllSearch(String code, String title, String description);
+  List<CourseStudentsWrapper> getAllSearch(String code, String title, String description);
 }

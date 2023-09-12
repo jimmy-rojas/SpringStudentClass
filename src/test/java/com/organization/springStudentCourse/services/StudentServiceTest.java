@@ -5,9 +5,9 @@ import static org.junit.Assert.assertNotNull;
 
 import com.organization.springStudentCourse.exceptions.InvalidOperationException;
 import com.organization.springStudentCourse.exceptions.NotFoundException;
-import com.organization.springStudentCourse.models.FullCourseData;
-import com.organization.springStudentCourse.models.FullStudentData;
-import com.organization.springStudentCourse.models.StudentData;
+import com.organization.springStudentCourse.models.CourseStudentsWrapper;
+import com.organization.springStudentCourse.models.StudentCoursesWrapper;
+import com.organization.springStudentCourse.models.StudentDTO;
 import com.organization.springStudentCourse.storage.ICourseRepository;
 import com.organization.springStudentCourse.storage.IStudentRepository;
 import java.util.ArrayList;
@@ -16,43 +16,43 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class StudentSaveServiceTest {
+public class StudentServiceTest {
 
-  private StudentSaveService instance;
+  private StudentService instance;
   private IStudentRepository studentRepository;
   private ICourseRepository courseRepository;
-  private FullStudentData studentBase;
+  private StudentCoursesWrapper studentBase;
 
   @Before
   public void setUp() {
-    studentBase = new FullStudentData(1, "firstName", "lastName", new HashSet<>());
+    studentBase = new StudentCoursesWrapper(1, "firstName", "lastName", new HashSet<>());
     studentRepository = new IStudentRepository() {
       @Override
-      public List<FullStudentData> getAllSearch(String firstName, String lastName) {
-        List<FullStudentData> data = new ArrayList<>();
-        data.add(new FullStudentData(1, firstName, lastName, new HashSet<>()));
+      public List<StudentCoursesWrapper> getAllSearch(String firstName, String lastName) {
+        List<StudentCoursesWrapper> data = new ArrayList<>();
+        data.add(new StudentCoursesWrapper(1, firstName, lastName, new HashSet<>()));
         return data;
       }
 
       @Override
-      public List<FullStudentData> getAll() {
+      public List<StudentCoursesWrapper> getAll() {
         return new ArrayList<>();
       }
 
       @Override
-      public FullStudentData getById(int id) throws NotFoundException {
-        return new FullStudentData(id, "firstName", "lastName", new HashSet<>());
+      public StudentCoursesWrapper getById(int id) throws NotFoundException {
+        return new StudentCoursesWrapper(id, "firstName", "lastName", new HashSet<>());
       }
 
       @Override
-      public FullStudentData save(FullStudentData student) {
-        return new FullStudentData(1, "firstName", "lastName", new HashSet<>());
+      public StudentCoursesWrapper save(StudentCoursesWrapper student) {
+        return new StudentCoursesWrapper(1, "firstName", "lastName", new HashSet<>());
       }
 
       @Override
-      public FullStudentData update(FullStudentData student) throws NotFoundException {
+      public StudentCoursesWrapper update(StudentCoursesWrapper student) throws NotFoundException {
         if (student.getId() > 0) {
-          return new FullStudentData(student.getId(), "firstName", "lastName", new HashSet<>());
+          return new StudentCoursesWrapper(student.getId(), "firstName", "lastName", new HashSet<>());
         }
         throw new NotFoundException("Not Found");
       }
@@ -66,27 +66,27 @@ public class StudentSaveServiceTest {
     };
     courseRepository = new ICourseRepository() {
       @Override
-      public List<FullCourseData> getAllSearch(String code, String title, String description) {
+      public List<CourseStudentsWrapper> getAllSearch(String code, String title, String description) {
         return null;
       }
 
       @Override
-      public List<FullCourseData> getAll() {
+      public List<CourseStudentsWrapper> getAll() {
         return null;
       }
 
       @Override
-      public FullCourseData getById(int id) throws NotFoundException {
-        return new FullCourseData(id, "code", "title", "desc", new HashSet<>());
+      public CourseStudentsWrapper getById(int id) throws NotFoundException {
+        return new CourseStudentsWrapper(id, "code", "title", "desc", new HashSet<>());
       }
 
       @Override
-      public FullCourseData save(FullCourseData dataToSave) {
+      public CourseStudentsWrapper save(CourseStudentsWrapper dataToSave) {
         return null;
       }
 
       @Override
-      public FullCourseData update(FullCourseData dataToUpdate) throws NotFoundException {
+      public CourseStudentsWrapper update(CourseStudentsWrapper dataToUpdate) throws NotFoundException {
         return null;
       }
 
@@ -95,26 +95,26 @@ public class StudentSaveServiceTest {
 
       }
     };
-    instance = new StudentSaveService(studentRepository, courseRepository);
+    instance = new StudentService(studentRepository, courseRepository);
   }
 
   @Test
   public void testGetAll() throws Exception {
-    List<FullStudentData> allStudents = instance.getAll();
+    List<StudentCoursesWrapper> allStudents = instance.getAll();
     assertNotNull(allStudents);
     assertEquals(0, allStudents.size());
   }
 
   @Test
   public void getAllSearch() throws Exception {
-    List<FullStudentData> allStudents = instance.getAllSearch("firstName", "lastName");
+    List<StudentCoursesWrapper> allStudents = instance.getAllSearch("firstName", "lastName");
     assertNotNull(allStudents);
     assertEquals(1, allStudents.size());
   }
 
   @Test
   public void testCreate() throws Exception {
-    StudentData studentSaved = instance.save(studentBase);
+    StudentDTO studentSaved = instance.save(studentBase);
     assertNotNull(studentSaved);
     assertEquals(1, studentSaved.getId());
   }
@@ -127,7 +127,7 @@ public class StudentSaveServiceTest {
 
   @Test
   public void testUpdate() throws Exception {
-    StudentData studentUpdated = instance.update(studentBase);
+    StudentDTO studentUpdated = instance.update(studentBase);
     assertNotNull(studentUpdated);
     assertEquals(1, studentUpdated.getId());
   }

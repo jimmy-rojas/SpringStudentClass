@@ -4,22 +4,22 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.Set;
 
 @JsonPropertyOrder({ "id", "code", "title", "description", "students" })
-public class FullCourseData extends CourseData {
+public class CourseStudentsWrapper extends CourseDTO {
 
-  private Set<StudentData> students;
+  private Set<StudentDTO> students;
 
-  public FullCourseData(int id, String code, String title, String description,
-                        Set<StudentData> students) {
+  public CourseStudentsWrapper(int id, String code, String title, String description,
+                               Set<StudentDTO> students) {
     super(id, code, title, description);
     this.students = students;
   }
 
-  public Set<StudentData> getStudents() {
+  public Set<StudentDTO> getStudents() {
     return students;
   }
 
   public void setStudents(
-      Set<StudentData> students) {
+      Set<StudentDTO> students) {
     this.students = students;
   }
 }
