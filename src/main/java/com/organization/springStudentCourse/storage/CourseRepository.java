@@ -1,10 +1,13 @@
 package com.organization.springStudentCourse.storage;
 
 import com.organization.springStudentCourse.exceptions.NotFoundException;
+import com.organization.springStudentCourse.models.CourseDTO;
 import com.organization.springStudentCourse.models.CourseStudentsWrapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.organization.springStudentCourse.models.StudentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
@@ -17,8 +20,8 @@ public class CourseRepository implements ICourseRepository {
   private MockDataStorage storage;
 
   @Override
-  public List<CourseStudentsWrapper> getAll() {
-    return new ArrayList<>(storage.getClassStudentMap().values());
+  public List<CourseDTO> getAll() {
+    return new ArrayList<>(storage.getCourseMap().values());
   }
 
   @Override

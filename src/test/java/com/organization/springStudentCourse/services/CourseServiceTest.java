@@ -7,6 +7,7 @@ import com.organization.springStudentCourse.exceptions.InvalidOperationException
 import com.organization.springStudentCourse.exceptions.NotFoundException;
 import com.organization.springStudentCourse.models.CourseDTO;
 import com.organization.springStudentCourse.models.CourseStudentsWrapper;
+import com.organization.springStudentCourse.models.StudentDTO;
 import com.organization.springStudentCourse.storage.ICourseRepository;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -33,7 +34,7 @@ public class CourseServiceTest {
       }
 
       @Override
-      public List<CourseStudentsWrapper> getAll() {
+      public List<CourseDTO> getAll() {
         return new ArrayList<>();
       }
 

@@ -18,8 +18,8 @@ public class StudentRepository implements IStudentRepository {
   private MockDataStorage storage;
 
   @Override
-  public List<StudentCoursesWrapper> getAll() {
-    return new ArrayList<>(storage.getStudentClassMap().values());
+  public List<StudentDTO> getAll() {
+    return new ArrayList<>(storage.getStudentMap().values());
   }
 
   @Override

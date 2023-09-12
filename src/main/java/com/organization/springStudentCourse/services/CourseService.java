@@ -8,7 +8,6 @@ import com.organization.springStudentCourse.storage.ICourseRepository;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,11 +26,7 @@ public class CourseService {
   }
 
   public List<CourseDTO> getAll() {
-    return repository.getAll()
-            .stream()
-            .filter(CourseDTO.class::isInstance)
-            .map(CourseDTO.class::cast)
-            .collect(Collectors.toList());
+    return repository.getAll();
   }
 
   public CourseStudentsWrapper getById(int id) throws NotFoundException {
