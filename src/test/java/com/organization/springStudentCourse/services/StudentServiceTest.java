@@ -1,8 +1,5 @@
 package com.organization.springStudentCourse.services;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import com.organization.springStudentCourse.exceptions.InvalidOperationException;
 import com.organization.springStudentCourse.exceptions.NotFoundException;
 import com.organization.springStudentCourse.models.CourseDTO;
@@ -11,11 +8,15 @@ import com.organization.springStudentCourse.models.StudentCoursesWrapper;
 import com.organization.springStudentCourse.models.StudentDTO;
 import com.organization.springStudentCourse.storage.ICourseRepository;
 import com.organization.springStudentCourse.storage.IStudentRepository;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import org.junit.Before;
-import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class StudentServiceTest {
 

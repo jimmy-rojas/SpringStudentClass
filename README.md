@@ -10,10 +10,10 @@ In order to compile run:
 In order to execute look for the artifact in the target folder
 - execute the command: 
 
-``` java -jar target/springStudentCourse-RC-1.0.2.jar ```
+``` java -jar target/springStudentCourse-RC-1.1.0.jar ```
 
 ### API Testing ###
-To test functionality, you can browse into http://localhost:8080/swagger-ui.html 
+To test functionality, you can browse into http://localhost:8080/swagger-ui/index.html 
 
 ### Additional note ###
 This sample project is using mock data which is load ramdomly at start Spring app
