@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 
 import com.organization.springStudentCourse.exceptions.InvalidOperationException;
 import com.organization.springStudentCourse.exceptions.NotFoundException;
+import com.organization.springStudentCourse.models.CourseDTO;
 import com.organization.springStudentCourse.models.CourseStudentsWrapper;
 import com.organization.springStudentCourse.models.StudentCoursesWrapper;
 import com.organization.springStudentCourse.models.StudentDTO;
@@ -35,7 +36,7 @@ public class StudentServiceTest {
       }
 
       @Override
-      public List<StudentCoursesWrapper> getAll() {
+      public List<StudentDTO> getAll() {
         return new ArrayList<>();
       }
 
@@ -71,7 +72,7 @@ public class StudentServiceTest {
       }
 
       @Override
-      public List<CourseStudentsWrapper> getAll() {
+      public List<CourseDTO> getAll() {
         return null;
       }
 

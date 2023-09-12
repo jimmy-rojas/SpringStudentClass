@@ -11,7 +11,6 @@ import com.organization.springStudentCourse.storage.IStudentRepository;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,11 +35,7 @@ public class StudentService {
   }
 
   public List<StudentDTO> getAll() {
-    return repository.getAll()
-            .stream()
-            .filter(StudentDTO.class::isInstance)
-            .map(StudentDTO.class::cast)
-            .collect(Collectors.toList());
+    return repository.getAll();
   }
 
   public StudentCoursesWrapper getById(int id) throws NotFoundException {

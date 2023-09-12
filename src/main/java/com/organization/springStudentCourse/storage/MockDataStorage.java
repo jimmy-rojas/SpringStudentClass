@@ -20,14 +20,14 @@ public class MockDataStorage {
 
   private Map<Integer, CourseStudentsWrapper> classStudentMap = new HashMap<>();
   private Map<Integer, StudentCoursesWrapper> studentClassMap = new HashMap<>();
+  private Map<Integer, StudentDTO> studentMap = new HashMap<>();
+  private Map<Integer, CourseDTO> courseMap = new HashMap<>();
 
   public final AtomicInteger counterStudent = new AtomicInteger();
   public final AtomicInteger counterClass = new AtomicInteger();
 
   @PostConstruct
   private void init() {
-    Map<Integer, StudentDTO> studentMap = new HashMap<>();
-    Map<Integer, CourseDTO> courseMap = new HashMap<>();
 
     for (int i=0; i<5; i++) {
       StudentDTO studentDTO = new StudentDTO(i,"firstName-"+i, "lastName-"+i);
@@ -62,4 +62,11 @@ public class MockDataStorage {
     return studentClassMap;
   }
 
+  public Map<Integer, StudentDTO> getStudentMap() {
+    return studentMap;
+  }
+
+  public Map<Integer, CourseDTO> getCourseMap() {
+    return courseMap;
+  }
 }
