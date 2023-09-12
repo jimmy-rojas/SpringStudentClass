@@ -10,7 +10,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
-import javax.annotation.PostConstruct;
+
+import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +23,6 @@ public class MockDataStorage {
   private Map<Integer, StudentCoursesWrapper> studentClassMap = new HashMap<>();
   private Map<Integer, StudentDTO> studentMap = new HashMap<>();
   private Map<Integer, CourseDTO> courseMap = new HashMap<>();
-
   public final AtomicInteger counterStudent = new AtomicInteger();
   public final AtomicInteger counterClass = new AtomicInteger();
 
