@@ -68,7 +68,7 @@ public class CourseServiceTest {
 
   @Test
   public void testGetAll() {
-    List<CourseStudentsWrapper> allClasses = instance.getAll();
+    List<CourseDTO> allClasses = instance.getAll();
     assertNotNull(allClasses);
     assertEquals(0, allClasses.size());
   }

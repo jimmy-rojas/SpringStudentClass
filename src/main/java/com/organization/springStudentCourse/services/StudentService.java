@@ -11,6 +11,8 @@ import com.organization.springStudentCourse.storage.IStudentRepository;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +35,12 @@ public class StudentService {
     this.classRepository = classRepository;
   }
 
-  public List<StudentCoursesWrapper> getAll() {
-    return repository.getAll();
+  public List<StudentDTO> getAll() {
+    return repository.getAll()
+            .stream()
+            .filter(StudentDTO.class::isInstance)
+            .map(StudentDTO.class::cast)
+            .collect(Collectors.toList());
   }
 
   public StudentCoursesWrapper getById(int id) throws NotFoundException {
@@ -75,8 +81,7 @@ public class StudentService {
     classIds.forEach(classId -> {
       try {
         CourseStudentsWrapper fullClassData = classRepository.getById(classId);
-        classes.add(new CourseDTO(fullClassData.getId(), fullClassData.getCode(),
-            fullClassData.getTitle(), fullClassData.getDescription()));
+        classes.add(fullClassData);
       } catch (NotFoundException e) {
         logger.warn("Unable to find class with id: " + classId);
       }
