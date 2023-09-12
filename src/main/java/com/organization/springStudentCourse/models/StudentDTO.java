@@ -3,13 +3,13 @@ package com.organization.springStudentCourse.models;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({ "id", "firstName", "lastName" })
-public class StudentData {
+public class StudentDTO {
 
   private int id;
   private String firstName;
   private String lastName;
 
-  public StudentData(int id, String firstName, String lastName) {
+  public StudentDTO(int id, String firstName, String lastName) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;

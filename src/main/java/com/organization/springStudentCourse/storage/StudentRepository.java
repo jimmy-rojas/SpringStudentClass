@@ -1,8 +1,8 @@
 package com.organization.springStudentCourse.storage;
 
 import com.organization.springStudentCourse.exceptions.NotFoundException;
-import com.organization.springStudentCourse.models.FullStudentData;
-import com.organization.springStudentCourse.models.StudentData;
+import com.organization.springStudentCourse.models.StudentCoursesWrapper;
+import com.organization.springStudentCourse.models.StudentDTO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,21 +18,21 @@ public class StudentRepository implements IStudentRepository {
   private MockDataStorage storage;
 
   @Override
-  public List<FullStudentData> getAll() {
+  public List<StudentCoursesWrapper> getAll() {
     return new ArrayList<>(storage.getStudentClassMap().values());
   }
 
   @Override
-  public FullStudentData getById(int id)
+  public StudentCoursesWrapper getById(int id)
       throws NotFoundException {
     if (!storage.getStudentClassMap().containsKey(id)) {
-      throw new NotFoundException("unable to find student");
+      throw new NotFoundException("Unable to find student with id: " + id);
     }
     return storage.getStudentClassMap().get(id);
   }
 
   @Override
-  public FullStudentData save(FullStudentData student) {
+  public StudentCoursesWrapper save(StudentCoursesWrapper student) {
     int newId = storage.counterStudent.incrementAndGet();
     student.setId(newId);
     storage.getStudentClassMap().put(newId, student);
@@ -40,7 +40,7 @@ public class StudentRepository implements IStudentRepository {
   }
 
   @Override
-  public FullStudentData update(FullStudentData student)
+  public StudentCoursesWrapper update(StudentCoursesWrapper student)
       throws NotFoundException {
     storage.getStudentClassMap().put(student.getId(), student);
     return student;
@@ -48,12 +48,12 @@ public class StudentRepository implements IStudentRepository {
 
   @Override
   public void delete(int studentId) throws NotFoundException {
-    StudentData studentData = getById(studentId);
+    StudentDTO studentData = getById(studentId);
     storage.getStudentClassMap().remove(studentData.getId());
   }
 
   @Override
-  public List<FullStudentData> getAllSearch(String firstName, String lastName) {
+  public List<StudentCoursesWrapper> getAllSearch(String firstName, String lastName) {
     return storage.getStudentClassMap().values()
         .stream()
         .filter((student) ->

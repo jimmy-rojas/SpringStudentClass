@@ -4,8 +4,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import com.organization.springStudentCourse.exceptions.InvalidOperationException;
 import com.organization.springStudentCourse.exceptions.NotFoundException;
-import com.organization.springStudentCourse.models.CourseData;
-import com.organization.springStudentCourse.services.CourseSaveService;
+import com.organization.springStudentCourse.models.CourseDTO;
+import com.organization.springStudentCourse.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,10 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("v1/courses")
 public class CourseController {
 
-  private final CourseSaveService service;
+  private final CourseService service;
 
   @Autowired
-  public CourseController(CourseSaveService service) {
+  public CourseController(CourseService service) {
     this.service = service;
   }
 
@@ -42,12 +42,12 @@ public class CourseController {
   }
 
   @RequestMapping(method=POST, value="/")
-  public ResponseEntity createCourse(@RequestBody CourseData courseData) {
+  public ResponseEntity createCourse(@RequestBody CourseDTO courseData) {
     return new ResponseEntity(this.service.save(courseData), HttpStatus.OK);
   }
 
   @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "/")
-  public ResponseEntity updateCourse(@RequestBody CourseData courseData)
+  public ResponseEntity updateCourse(@RequestBody CourseDTO courseData)
       throws NotFoundException {
     return new ResponseEntity(this.service.update(courseData), HttpStatus.OK);
   }
